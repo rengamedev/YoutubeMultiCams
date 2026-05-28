@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+<iframe id="video" width="560" height="315" src="https://www.youtube-nocookie.com/embed/UNbOvsRAx9U?enablejsapi=1&autoplay=1&mute=1" frameborder="0"></iframe>
+<button id="pauseBtn">Pause</button>
+<button id="playBtn">Play</button>
+<script>
+    document.getElementById('pauseBtn').onclick = () => {
+        document.getElementById('video').contentWindow.postMessage(JSON.stringify({
+            event: 'command',
+            func: 'pauseVideo',
+            args: []
+        }), '*');
+    };
+    document.getElementById('playBtn').onclick = () => {
+        document.getElementById('video').contentWindow.postMessage(JSON.stringify({
+            event: 'command',
+            func: 'playVideo',
+            args: []
+        }), '*');
+    };
+</script>
+</body>
+</html>
