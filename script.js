@@ -481,6 +481,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 referrerpolicy="strict-origin-when-cross-origin">
             </iframe>
             <div class="cell-controls">
+                <button class="btn-icon-inside btn-mute" title="Включить/выключить звук">
+                    ${isMuted
+                        ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>`
+                        : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`}
+                </button>
                 <button class="btn-icon-inside btn-fullscreen" title="На весь экран">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
                 </button>
@@ -538,6 +543,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const index = parseInt(cell.dataset.index);
+
+        const btnMute = cell.querySelector('.btn-mute');
+        btnMute.addEventListener('click', () => {
+            const shouldMute = cellState.muted === false;
+            cellState.muted = shouldMute;
+            iframe.contentWindow.postMessage(JSON.stringify({
+                event: 'command',
+                func: shouldMute ? 'mute' : 'unMute',
+                args: []
+            }), '*');
+            btnMute.innerHTML = shouldMute
+                ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>`
+                : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`;
+            saveToLocalStorage();
+        });
 
         const btnFullscreen = cell.querySelector('.btn-fullscreen');
         btnFullscreen.addEventListener('click', () => {
