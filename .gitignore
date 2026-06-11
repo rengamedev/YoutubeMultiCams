@@ -1,0 +1,32 @@
+# Переменные окружения (содержит токен бота!)
+.env
+
+# База данных SQLite
+*.db
+
+# Персистентный кэш наблюдений AEMET (генерируется в рантайме)
+aemet_obs_cache.json
+aemet_obs_cache.json.tmp
+
+# Кэш Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Сгенерированные файлы отчетов
+*.xlsx
+*.png
+
+# IDE
+.vscode/
+.idea/
+
+# Покрытие тестами (coverage.py / pytest-cov)
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+
+"my settings"/
+my_settings/
